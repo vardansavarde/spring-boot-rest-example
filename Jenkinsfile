@@ -56,7 +56,6 @@ node{
 		withDockerRegistry(credentialsId: 'github-vardansavarde') {
 				customImage.push()
 				customImage.push('latest')
-			}
 		}
 	}
 }
