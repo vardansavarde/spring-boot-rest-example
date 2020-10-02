@@ -52,6 +52,7 @@ node{
 		def customImage
 		docker.withServer('tcp://192.168.99.108:2376') {
 			customImage = docker.build("test-image:${env.BUILD_ID}")
+			sh label: 'UNSET the DOCKER tls verify flag', script: 'unset DOCKER_TLS_VERIFY'
 			withDockerRegistry(credentialsId: 'dockerhub-registry') {
 					customImage.push()
 					customImage.push('latest')
