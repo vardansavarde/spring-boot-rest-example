@@ -48,4 +48,11 @@ node{
 	//CHANGE THE ARCHIVE EXTENSION IF REQUIRED
 			archiveArtifacts 'target/*.war'
 	}
+	stage('Build docker image') {
+		docker.withServer('tcp://192.168.99.108:2676') {
+			def customImage = docker.build("test-image:${env.BUILD_ID}")
+			customImage.push()
+			customImage.push('latest')
+		}
+	}
 }
