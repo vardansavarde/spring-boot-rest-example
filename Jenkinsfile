@@ -49,7 +49,7 @@ node{
 			archiveArtifacts 'target/*.war'
 	}
 	stage('Build docker image') {
-		withDockerRegistry(credentialsId: 'github-vardansavarde', url: 'test') {
+		withDockerRegistry(credentialsId: 'github-vardansavarde') {
 			docker.withServer('tcp://192.168.99.108:2376') {
 				def customImage = docker.build("test-image:${env.BUILD_ID}")
 				customImage.push()
