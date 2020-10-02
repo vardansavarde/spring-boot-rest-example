@@ -53,7 +53,7 @@ node{
 		docker.withServer('tcp://192.168.99.108:2376') {
 			customImage = docker.build("test-image:${env.BUILD_ID}")
 		}
-		withDockerRegistry(credentialsId: 'github-vardansavarde') {
+		withDockerRegistry(credentialsId: 'dockerhub-registry') {
 				customImage.push()
 				customImage.push('latest')
 		}
