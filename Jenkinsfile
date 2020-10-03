@@ -56,11 +56,9 @@ node{
 
 				withCredentials([usernamePassword( credentialsId: 'dockerhub-registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
-					docker.withRegistry('', 'dockerhub-registry') {
 						sh "docker login -u ${USERNAME} -p ${PASSWORD}"
 						customImage.push()
 						customImage.push('latest')
-					}
 				}
 			}
 		}
