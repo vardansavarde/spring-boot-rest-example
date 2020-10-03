@@ -50,7 +50,7 @@ node{
 	}
 	stage('Build docker image') {
 		def customImage
-		withEnv('DOCKER_TLS_VERIFY=1'){
+		withEnv(["DOCKER_TLS_VERIFY=1"]){
 			docker.withServer('tcp://192.168.99.108:2376') {
 				customImage = docker.build("vardansavarde/test-spring-boot:${env.BUILD_ID}")
 				withCredentials([usernamePassword( credentialsId: 'dockerhub-registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
