@@ -48,4 +48,19 @@ node{
 	//CHANGE THE ARCHIVE EXTENSION IF REQUIRED
 			archiveArtifacts 'target/*.war'
 	}
+	stage('Build docker image') {
+		def customImage
+		docker.withServer('tcp://192.168.99.108:2376') {
+			withEnv(["DOCKER_TLS_VERIFY=1"]){
+				customImage = docker.build("vardansavarde/test-spring-boot:${env.BUILD_ID}")
+
+				withCredentials([usernamePassword( credentialsId: 'dockerhub-registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+
+						sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+						customImage.push()
+						customImage.push('latest')
+				}
+			}
+		}
+  }
 }
